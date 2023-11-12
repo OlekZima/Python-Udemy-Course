@@ -1,4 +1,4 @@
-from random import randint, choice, shuffle
+from random import randint, choice, sample
 from string import ascii_letters
 
 print("Welcome to the PyPassword Generator!")
@@ -12,7 +12,7 @@ password = ""
 for i in range(pass_len):
     password += choice(ascii_letters)
 
-symbols = ["!", "@", "#", "$", "%", "^", "&", "*"]
+symbols = ['!', '#', '$', '%', '&', '()', ')', '*', '+']
 
 for i in range(symbols_num):
     password += choice(symbols)
@@ -20,6 +20,7 @@ for i in range(symbols_num):
 for i in range(numbers_num):
     password += str(randint(0, 9))
 
-password = (shuffle(list(password)))
+# password = "".join(sample(password, len(password)))
+password = "".join(list(password))
 
 print(f"Your password is {password}")
