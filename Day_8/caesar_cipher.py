@@ -1,5 +1,5 @@
 from string import ascii_lowercase
-from caeser_cipher import logo
+from caeser_cipher_logo import logo
 
 def caesar_cipher(text: str, shift: int, encrypt=True):
     text = text.lower()
@@ -33,5 +33,7 @@ if __name__ == "__main__":
         elif encode.lower() == "decode":
             print(f"Your decoded message is: {caesar_cipher(text, shift, encrypt=False)}")
 
-        user_continue = input("Do you want to restart the program? yesr or no\n").lower()
+        user_continue = input("Do you want to restart the program? 'yes' or 'no'\n").lower()
         is_continue = True if user_continue == "yes" else False
+
+print("Se ya!")

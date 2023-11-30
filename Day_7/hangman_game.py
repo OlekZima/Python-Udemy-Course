@@ -2,19 +2,21 @@
 from random import choice
 from hangman_art import logo, stages
 from hangman_words import word_list
+
 def win():
     print("You win!")
     exit()
 
 def lose():
     print("You lose!")
+    print(f"Chosen word was: {chosen_word}")
     exit()
 
 def print_under_lines():
     [print(x, end=' ') for x in guessed_letters]
     print()
 
-chosen_word = choice(word_list)
+chosen_word = choice(word_list).lower()
 remaining_lives = len(stages) - 1
 
 # Debug
