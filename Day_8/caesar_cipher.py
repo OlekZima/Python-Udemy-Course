@@ -24,13 +24,13 @@ if __name__ == "__main__":
     is_continue = True
     while is_continue:
             
-        encode = input("Encode or decore?\n")
+        encode = input("Encode or decore?\n").lower()
         text = input("Type your message:\n").lower()
         shift = int(input("Type the shift number:\n"))
 
-        if encode.lower() == "encode":
+        if encode == "encode":
             print(f"Your encoded message is: {caesar_cipher(text, shift)}")
-        elif encode.lower() == "decode":
+        elif encode == "decode":
             print(f"Your decoded message is: {caesar_cipher(text, shift, encrypt=False)}")
 
         user_continue = input("Do you want to restart the program? 'yes' or 'no'\n").lower()
