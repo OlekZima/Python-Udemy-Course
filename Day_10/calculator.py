@@ -1,6 +1,12 @@
 from calculator_logo import logo
 
 def choose_operation() -> str:
+    """
+    Prompts user to choose the operation's char
+
+    Returns:
+        str: Valid operation char. One of '+', '-', '*', '/'.
+    """
     is_input_correct = False
     while not is_input_correct:
         operation = input("+\n-\n*\n/\nPick an operation: ")
@@ -61,7 +67,5 @@ if __name__ == "__main__":
         new_calculation = calculator()
         if new_calculation == 'q':
             break
-        else:
-            continue
-
+        
     print("Bye!")
