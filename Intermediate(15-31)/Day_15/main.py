@@ -46,13 +46,29 @@ def validate_int_input(prompt: str) -> int:
     while not is_validated:
         try:
             return_val = int(input(prompt))
+            if return_val < 0:
+                continue
             is_validated = True
         except ValueError:
             print("Invalid input!")
     return return_val
 
 
+def reduce_resources(water: int, milk: int, coffee: int) -> None:
+    resources["water"] -= water
+    resources["milk"] -= milk
+    resources["coffee"] -= coffee
+
+def make_coffee(coffee: Dict) -> float:
+    money = count_money(coffee["cost"])
+    if money != 0:
+        ingredients = coffee["ingredients"]
+        reduce_resources(ingredients["water"], ingredients["milk"], ingredients["coffee"])
+        return money
+
+
 def count_money(coffee_price: float):
+    print("Please insert coins.")
     quarters_val = validate_int_input("How many quarters?: ") * 0.25
     dimes_val = validate_int_input("How many dimes?: ") * 0.10
     nickles_val = validate_int_input("How many nickles?: ") * 0.05
@@ -68,7 +84,8 @@ def count_money(coffee_price: float):
 
 
 def coffee_machine() -> None:
-    money = 0.0
+    overall_money = 0.0
+
 
 if __name__ == '__main__':
     count_money(2.5)
