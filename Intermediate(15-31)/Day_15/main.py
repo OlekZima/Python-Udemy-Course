@@ -1,21 +1,23 @@
 from typing import Dict, List
 import menu_and_resources
 
-class Coffee_machine():
+class CoffeeMachine():
     def __init__(self, initial_resources: Dict[str, int], menu, initital_money: int = 0):
         self._resources = initial_resources
         self._money = initital_money
         self._menu = menu
     
 
-    def print_resources(self) -> None:
+    def print_resources(self):
         print(f"Water: {self._resources['water']}ml")
         print(f"Milk: {self._resources['milk']}ml")
         print(f"Coffee: {self._resources['coffee']}g")
         print(f"Money: ${self._money}")
 
+
     def _get_resources(self) -> List[int]:
         return [self._resources["water"], self._resources["milk"], self._resources["coffee"]]
+
 
     @staticmethod
     def _validate_int_input(prompt: str) -> int:
@@ -32,7 +34,7 @@ class Coffee_machine():
         return return_val
 
 
-    def _reduce_resources(self, water: int, milk: int, coffee: int) -> None:
+    def _reduce_resources(self, water: int, milk: int, coffee: int):
         self._resources["water"] -= water
         self._resources["milk"] -= milk
         self._resources["coffee"] -= coffee
@@ -46,6 +48,7 @@ class Coffee_machine():
         if False in availables:
             return False
         return True
+
 
     def make_coffee(self, coffee_name: str) -> None:
         money = self._count_money()
@@ -104,11 +107,10 @@ class Coffee_machine():
         return coffe_to_make
         
 
-
 if __name__ == '__main__':
     resources = menu_and_resources.resources
     menu = menu_and_resources.menu
-    coffee_machine = Coffee_machine(resources, menu)
+    coffee_machine = CoffeeMachine(resources, menu)
     is_working = True
     while is_working:
         try:
