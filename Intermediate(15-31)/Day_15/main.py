@@ -45,18 +45,20 @@ class CoffeeMachine():
         ingredients = self._menu[coffee_name]["ingredients"]
         resources_to_spend = [ingredients[key] for key in ingredients]
         availables = [available_resources[i] >= resources_to_spend[i] for i in range(len(available_resources))]
+        # print(availables)
         if False in availables:
             return False
         return True
 
 
     def make_coffee(self, coffee_name: str) -> None:
-        money = self._count_money()
-        coffee = self._menu.get(coffee_name)
 
         if not self._is_coffee_can_be_made(coffee_name):
             print("Sorry, there is not enough resources for this coffee. Try a different one.")
             return
+        
+        money = self._count_money()
+        coffee = self._menu.get(coffee_name)
         
         is_payment_ok = self._process_payment(money, coffee["cost"])
         if not is_payment_ok:
