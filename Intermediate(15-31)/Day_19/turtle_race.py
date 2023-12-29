@@ -22,7 +22,7 @@ class Race:
     def get_screen(self):
         return self._screen
 
-    def _move_turtles_to_start(self, dy: int = 25):
+    def _move_turtles_to_start(self, dy: int = 30):
         i = 0
         for turtle in self._turtles:
             turtle.penup()
@@ -35,7 +35,7 @@ class Race:
 
     def validate_str_input(self, title: str, prompt: str) -> str:
         is_validated = False
-        users_input = ""
+        users_input: str = ""
         while not is_validated:
             tmp = self._screen.textinput(
                 title=title,
@@ -56,9 +56,8 @@ class Race:
         while is_race:
             for turtle in self._turtles:
                 self._go_for_random(turtle)
-                x, y = turtle.pos()
 
-                if x < 230:
+                if turtle.xcor() < 230:
                     continue
                 winner = turtle
                 return winner
@@ -66,7 +65,7 @@ class Race:
 
 
 def main():
-    colors: list[str] = ["purple", "blue", "green", "yellow3", "orange", "red"]
+    colors: list[str] = ["purple", "blue", "green", "yellow", "orange", "red"]
     race = Race(colors)
     screen = race.get_screen()
 
