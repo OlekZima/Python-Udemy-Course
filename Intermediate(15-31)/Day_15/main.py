@@ -2,9 +2,9 @@ from typing import Dict, List
 import menu_and_resources
 
 class CoffeeMachine():
-    def __init__(self, initial_resources: Dict[str, int], menu, initital_money: int = 0):
+    def __init__(self, initial_resources: Dict[str, int], menu, initial_money: int = 0):
         self._resources = initial_resources
-        self._money = initital_money
+        self._money = initial_money
         self._menu = menu
     
 
@@ -44,9 +44,9 @@ class CoffeeMachine():
         available_resources = self._get_resources()
         ingredients = self._menu[coffee_name]["ingredients"]
         resources_to_spend = [ingredients[key] for key in ingredients]
-        availables = [available_resources[i] >= resources_to_spend[i] for i in range(len(available_resources))]
-        # print(availables)
-        if False in availables:
+        available = [available_resources[i] >= resources_to_spend[i] for i in range(len(available_resources))]
+        # print(available)
+        if False in available:
             return False
         return True
 
@@ -72,7 +72,7 @@ class CoffeeMachine():
 
     def _process_payment(self, money_to_proceed: float, coffee_price: float) -> bool:
         if money_to_proceed < coffee_price:
-            print(f"Sorry that's not enought money. Returning money.")
+            print(f"Sorry that's not enough money. Returning money.")
             return False
         elif money_to_proceed == coffee_price:
             print(f"Payment complete!")
@@ -99,14 +99,14 @@ class CoffeeMachine():
 
     def get_coffee(self) -> str:
         is_coffee_exists = False
-        coffe_to_make = ""
+        coffee_to_make = ""
         while not is_coffee_exists:
-            coffe_to_make = input("What would you like? (espresso/latte/cappucino): ").lower()
-            if coffe_to_make == "report":
+            coffee_to_make = input("What would you like? (espresso/latte/cappuccino): ").lower()
+            if coffee_to_make == "report":
                 self.print_resources()
-            if coffe_to_make in self._menu:
+            if coffee_to_make in self._menu:
                 break
-        return coffe_to_make
+        return coffee_to_make
         
 
 if __name__ == '__main__':
@@ -123,4 +123,4 @@ if __name__ == '__main__':
             print("Shutting down!")
             is_working = False
     
-    print("Shutted down")
+    print("Shuted down")
