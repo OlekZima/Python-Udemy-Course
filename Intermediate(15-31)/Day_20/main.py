@@ -1,6 +1,5 @@
 import time
 import turtle as t
-from typing import List
 from snake import Snake
 
 
@@ -10,7 +9,13 @@ screen.bgcolor("gray")
 screen.title("Snake game")
 screen.tracer(0)
 
-snake = Snake()
+snake = Snake(init_size=3)
+
+screen.listen()
+screen.onkeypress(key="Up", fun=snake.up)
+screen.onkeypress(key="Down", fun=snake.down)
+screen.onkeypress(key="Left", fun=snake.left)
+screen.onkeypress(key="Right", fun=snake.right)
 
 is_game = True
 while is_game:
