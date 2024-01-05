@@ -13,13 +13,15 @@ class Direction(Enum):
 class Snake:
     def __init__(self, init_size: int = 3):
         self.MOVE_DISTANCE: int = 20
-        self.segments: List[t.Turtle] = [Snake.init_turtle(i) for i in range(init_size)]
+        self.segments: List[t.Turtle] = [
+            Snake._init_turtle(i) for i in range(init_size)
+        ]
         self.head: t.Turtle = self.segments[0]
         self.head.color("Black")
         self.direction = self.head.heading()
 
     @staticmethod
-    def init_turtle(offset_from_middle: int) -> t.Turtle:
+    def _init_turtle(offset_from_middle: int) -> t.Turtle:
         tmp_turtle = t.Turtle(shape="square")
         tmp_turtle.shapesize(outline=0)
         tmp_turtle.penup()
