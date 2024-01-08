@@ -20,17 +20,21 @@ screen.onkey(key="Down", fun=snake.down)
 screen.onkey(key="Left", fun=snake.left)
 screen.onkey(key="Right", fun=snake.right)
 
-is_game = True
-while is_game:
+is_stopped: bool = False
+while not is_stopped:
     screen.update()
     time.sleep(0.1)
     snake.move()
 
     # Check food collision
     if snake.head.distance(x=food) <= 15:
-        print("am")
+        # print("am")
         scoreboard.increment()
         food.refresh()
+        snake.extend()
         # snake.segments.append(snake.init_turtle(len(snake.segments)))
 
+    is_stopped = snake.is_wall_collision() or snake.is_tail_collision()
+
+scoreboard.game_over()
 screen.exitonclick()
