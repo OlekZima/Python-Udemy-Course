@@ -16,9 +16,14 @@ class Scoreboard(Turtle):
         self._write_score()
 
     def _write_score(self):
-        self.clear()
+        self._write_prompt(f"Score: {self.score}")
+
+    def _write_prompt(self, prompt: str, is_clear: bool = True):
+        if is_clear:
+            self.clear()
+
         self.write(
-            arg=f"Score: {self.score}",
+            arg=prompt,
             move=False,
             align=self.ALIGN,
             font=self.FONT,
@@ -27,3 +32,7 @@ class Scoreboard(Turtle):
     def increment(self):
         self.score += 1
         self._write_score()
+
+    def game_over(self):
+        self.goto(x=0, y=0)
+        self._write_prompt(f"Game over!", is_clear=False)
