@@ -20,6 +20,34 @@ class Snake:
         self.head.color("Black")
         self.direction = self.head.heading()
 
+    def extend(self):
+        self._add_segment(self.segments[-1].pos())
+
+    def is_wall_collision(self) -> bool:
+        if (
+            self.head.xcor() > 290
+            or self.head.xcor() < -290
+            or self.head.ycor() > 290
+            or self.head.ycor() < -290
+        ):
+            return True
+
+        return False
+
+    def is_tail_collision(self) -> bool:
+        for segment in self.segments[2:]:
+            if self.head.distance(segment) < 10:
+                return True
+        else:
+            return False
+
+    def _add_segment(self, position):
+        new_segment = t.Turtle(shape="square")
+        new_segment.color("black", "white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
     @staticmethod
     def _init_turtle(offset_from_middle: int) -> t.Turtle:
         tmp_turtle = t.Turtle(shape="square")
