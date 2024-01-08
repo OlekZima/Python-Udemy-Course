@@ -35,7 +35,7 @@ class Snake:
         return False
 
     def is_tail_collision(self) -> bool:
-        for segment in self.segments[2:]:
+        for segment in self.segments[1:]:
             if self.head.distance(segment) < 10:
                 return True
         else:
