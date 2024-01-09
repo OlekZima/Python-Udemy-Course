@@ -16,6 +16,7 @@ def init_screen(width: int, height: int):
 
 width = 800
 height = 600
+init_screen(width, height)
 screen = init_screen(800, 600)
 
 screen_turtle = ScreenTurtle(width, height)
