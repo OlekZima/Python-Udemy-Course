@@ -2,16 +2,17 @@ import turtle as t
 
 
 class ScreenTurtle(t.Turtle):
-    def __init__(self, screen: t._Screen, width: int = 800, height: int = 600):
-        screen.setup(width=width, height=height)
-        screen.bgcolor("black")
-        screen.title("Pong")
-        self = t.Turtle(visible=False)
+    def __init__(self, width: int = 800, height: int = 600):
+        super().__init__(visible=False)
+        self.speed("fastest")
         self.penup()
         self.pensize(width=4)
         self.goto(x=0, y=height / 2)
         self.pencolor("white")
         self.setheading(270)
+        self.create_line()
+
+    def create_line(self):
         for _ in range(20):
             self.forward(15)
             self.pendown()
