@@ -1,7 +1,7 @@
-import turtle as t
+from turtle import Turtle
 
 
-class ScreenTurtle(t.Turtle):
+class ScreenTurtle(Turtle):
     def __init__(self, width: int = 800, height: int = 600):
         super().__init__(visible=False)
         self.speed("fastest")

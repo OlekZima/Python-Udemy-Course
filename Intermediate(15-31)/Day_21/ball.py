@@ -1,4 +1,6 @@
 from turtle import Turtle
+from typing import List
+from paddle import Paddle
 
 
 class Ball(Turtle):
@@ -8,18 +10,25 @@ class Ball(Turtle):
         self.speed("fastest")
         self.color("white")
 
-    def move_to_the_point(self, x: int, y: int, speed: float = 0.5):
-        # x -= 20
-        # y -= 20
-        slope = 0
-        try:
-            slope: float = (y - self.ycor()) / (x - self.xcor())
-        except ZeroDivisionError:
-            print("lol, zero division")
+        self.x_speed = 10
+        self.y_speed = 10
 
-        x_step: float = speed
+    def move(self, paddles: List[Paddle]):
+        self.goto(self.xcor() + self.x_speed, self.ycor() + self.y_speed)
+        if self.ycor() > 280 or self.ycor() < -280:
+            self.bounce_y()
 
-        print(slope)
+        if (self.distance(paddles[0]) < 50 and self.xcor() < -320) or (
+            self.distance(paddles[1]) < 50 and self.xcor() > 320
+        ):
+            self.bounce_x()
 
-        while self.xcor() < x and self.ycor() < y:
-            self.goto(self.xcor() + x_step, self.ycor() + x_step * slope)
+    def reset_ball(self):
+        self.home()
+        self.bounce_x()
+
+    def bounce_y(self):
+        self.y_speed *= -1
+
+    def bounce_x(self):
+        self.x_speed *= -1

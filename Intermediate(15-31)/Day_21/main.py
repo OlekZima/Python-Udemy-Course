@@ -1,7 +1,9 @@
 import turtle as t
+from typing import List
 from screen_turtle import ScreenTurtle
 from paddle import Paddle
 from ball import Ball
+from time import sleep
 
 
 def init_screen(width: int, height: int) -> t._Screen:
@@ -22,24 +24,28 @@ def main(width: int, height: int):
 
     ball = Ball()
 
-    player = Paddle(width)
-    screen.onkeypress(key="w", fun=player.move_up)
-    screen.onkeypress(key="s", fun=player.move_down)
+    l_paddle = Paddle(width)
+    screen.onkeypress(key="w", fun=l_paddle.move_up)
+    screen.onkeypress(key="s", fun=l_paddle.move_down)
 
-    computer = Paddle(width, is_player=False)
-    screen.onkeypress(key="Up", fun=computer.move_up)
-    screen.onkeypress(key="Down", fun=computer.move_down)
+    r_paddle = Paddle(width, is_player=False)
+    screen.onkeypress(key="Up", fun=r_paddle.move_up)
+    screen.onkeypress(key="Down", fun=r_paddle.move_down)
 
-    # ball_tick_speed =
-    target_x, target_y = width / 2 - 20, height / 2 - 20
-    slope = (target_y - ball.ycor()) / (target_x - ball.xcor())
-    x_step = 0.5
+    paddles: list[Paddle] = [l_paddle, r_paddle]
 
     is_game = True
     while is_game:
-        ball_x, ball_y = ball.pos()
-        if ball_x < target_x and ball_y < target_y:
-            ball.goto(ball.xcor() + x_step, ball.ycor() + x_step * slope)
+        ball.move(paddles)
+        sleep(0.1)
+
+        # l_paddle miss
+        if ball.xcor() < -380:
+            ball.reset_ball()
+
+        # r_paddle miss
+        if ball.xcor() > 380:
+            ball.reset_ball()
 
         screen.update()
 
