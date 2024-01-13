@@ -4,6 +4,7 @@ from screen_turtle import ScreenTurtle
 from paddle import Paddle
 from ball import Ball
 from time import sleep
+from scoreboard import Scoreboard
 
 
 def init_screen(width: int, height: int) -> t._Screen:
@@ -23,6 +24,7 @@ def main(width: int, height: int):
     screen_turtle = ScreenTurtle(width, height)
 
     ball = Ball()
+    scoreboard = Scoreboard()
 
     l_paddle = Paddle(width)
     screen.onkeypress(key="w", fun=l_paddle.move_up)
@@ -32,7 +34,7 @@ def main(width: int, height: int):
     screen.onkeypress(key="Up", fun=r_paddle.move_up)
     screen.onkeypress(key="Down", fun=r_paddle.move_down)
 
-    paddles: list[Paddle] = [l_paddle, r_paddle]
+    paddles: List[Paddle] = [l_paddle, r_paddle]
 
     is_game = True
     while is_game:
@@ -42,10 +44,13 @@ def main(width: int, height: int):
         # l_paddle miss
         if ball.xcor() < -380:
             ball.reset_ball()
+            scoreboard.r_point()
+
 
         # r_paddle miss
         if ball.xcor() > 380:
             ball.reset_ball()
+            scoreboard.l_point()
 
         screen.update()
 
