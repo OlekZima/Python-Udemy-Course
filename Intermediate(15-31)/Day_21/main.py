@@ -53,6 +53,4 @@ def main(width: int, height: int):
 
 
 if __name__ == "__main__":
-    width = 800
-    height = 600
     main(800, 600)
