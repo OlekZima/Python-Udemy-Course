@@ -2,7 +2,7 @@ from turtle import Turtle
 
 
 class ScreenTurtle(Turtle):
-    def __init__(self, width: int = 800, height: int = 600):
+    def __init__(self, height: int = 600):
         super().__init__(visible=False)
         self.speed("fastest")
         self.penup()

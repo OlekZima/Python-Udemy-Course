@@ -21,7 +21,7 @@ def init_screen(width: int, height: int) -> t._Screen:
 def main(width: int, height: int):
     screen = init_screen(width, height)
 
-    screen_turtle = ScreenTurtle(width, height)
+    ScreenTurtle(height)
 
     ball = Ball()
     scoreboard = Scoreboard()

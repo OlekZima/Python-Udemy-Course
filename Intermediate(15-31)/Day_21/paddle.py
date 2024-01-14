@@ -11,9 +11,9 @@ class Paddle(Turtle):
         self.shapesize(stretch_wid=1, stretch_len=5)
 
         if not is_player:
-            self.goto(screen_width / 2 - 50, 0)
+            self.goto(screen_width / 2 - 40, 0)
         else:
-            self.goto(-screen_width / 2 + 50, 0)
+            self.goto(-screen_width / 2 + 40, 0)
         self.setheading(90)
 
     def move_up(self):
