@@ -3,7 +3,7 @@ from typing import List
 from screen_turtle import ScreenTurtle
 from paddle import Paddle
 from ball import Ball
-from time import sleep
+import time
 from scoreboard import Scoreboard
 
 
@@ -39,13 +39,12 @@ def main(width: int, height: int):
     is_game = True
     while is_game:
         ball.move(paddles)
-        sleep(0.1)
+        time.sleep(ball.move_speed)
 
         # l_paddle miss
         if ball.xcor() < -380:
             ball.reset_ball()
             scoreboard.r_point()
-
 
         # r_paddle miss
         if ball.xcor() > 380:

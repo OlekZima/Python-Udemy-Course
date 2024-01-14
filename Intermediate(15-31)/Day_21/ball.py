@@ -13,6 +13,8 @@ class Ball(Turtle):
         self.x_speed = 10
         self.y_speed = 10
 
+        self.move_speed = 0.1
+
     def move(self, paddles: List[Paddle]):
         self.goto(self.xcor() + self.x_speed, self.ycor() + self.y_speed)
         if self.ycor() > 280 or self.ycor() < -280:
@@ -26,9 +28,11 @@ class Ball(Turtle):
     def reset_ball(self):
         self.home()
         self.bounce_x()
+        self.move_speed = 0.1
 
     def bounce_y(self):
         self.y_speed *= -1
 
     def bounce_x(self):
         self.x_speed *= -1
+        self.move_speed *= 0.9
