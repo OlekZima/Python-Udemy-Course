@@ -1,19 +1,14 @@
 import time
-import turtle as t
+from turtle import Screen
+from player import Player
+from car_manager import CarManager
+from scoreboard import Scoreboard
 
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.tracer(0)
 
-def main():
-    screen = t.Screen()
-    screen.setup(600, 600)
-    screen.tracer(0)
-
-    is_game = True
-    while is_game:
-        screen.update()
-        time.sleep(0.1)
-
-    screen.exitonclick()
-
-
-if __name__ == "__main__":
-    main()
+game_is_on = True
+while game_is_on:
+    time.sleep(0.1)
+    screen.update()
