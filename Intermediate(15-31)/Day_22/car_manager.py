@@ -1,10 +1,11 @@
 from typing import List
+from car import Car
 
-
-COLORS: List[str] = ["red", "orange", "yellow", "green", "blue", "purple"]
 STARTING_MOVE_DISTANCE = 5
 MOVE_INCREMENT = 10
+COLORS: List[str] = ["red", "orange", "yellow", "green", "blue", "purple"]
 
 
 class CarManager:
-    pass
+    def __init__(self):
+        pass
