@@ -1,5 +1,6 @@
-from turtle import Turtle
-
+from turtle import Turtle, distance
+from typing import List
+from car import Car
 
 STARTING_POSITION = (0, -280)
 MOVE_DISTANCE = 10
@@ -19,3 +20,11 @@ class Player(Turtle):
 
     def reset_pos(self):
         self.goto(STARTING_POSITION)
+
+    def is_car_collision(self, cars: List[Car]) -> bool:
+        for car in cars:
+            if self.distance(car) >= 30:
+                continue
+            return True
+        else:
+            return False
