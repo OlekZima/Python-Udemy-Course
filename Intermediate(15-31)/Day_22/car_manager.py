@@ -8,4 +8,16 @@ COLORS: List[str] = ["red", "orange", "yellow", "green", "blue", "purple"]
 
 class CarManager:
     def __init__(self):
-        pass
+        self.cars: List[Car] = []
+
+    def create_car(self):
+        new_car = Car()
+        self.cars.append(new_car)
+
+    def move_cars(self):
+        move_distance = 5
+        for car in self.cars:
+            car.forward(move_distance)
+
+    def get_cars(self) -> List[Car]:
+        return self.cars
