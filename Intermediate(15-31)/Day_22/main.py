@@ -12,11 +12,20 @@ screen.listen()
 
 player = Player()
 scoreboard = Scoreboard()
-car = Car()
+car_manager = CarManager()
+
+car_manager.create_car()
+
 game_is_on = True
 while game_is_on:
     screen.onkeypress(key="w", fun=player.move_up)
     if player.ycor() >= FINISH_LINE_Y:
         player.reset_pos()
+    car_manager.move_cars()
+
+    game_is_on = not player.is_car_collision(car_manager.get_cars())
+
     time.sleep(0.1)
     screen.update()
+
+print("GG")
