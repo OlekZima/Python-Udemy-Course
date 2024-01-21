@@ -7,6 +7,6 @@ class Car(Turtle):
         super().__init__(shape="square")
         self.penup()
         self.speed("fastest")
-        self.goto(400, 0)
+        self.goto(300, 0)
         self.setheading(180)
         self.shapesize(1, 2)
