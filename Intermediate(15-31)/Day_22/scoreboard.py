@@ -1,22 +1,28 @@
 from turtle import Turtle
-from typing import Tuple
 
 
 class Scoreboard(Turtle):
     def __init__(self):
         super().__init__(visible=False)
-        self.level: int = 1
+        self.color("white")
         self.penup()
-        self.goto(-250, 250)
-        self.FONT: Tuple[str, int, str] = ("Courier", 24, "normal")
 
-    def write_level(self, text: str):
+        self.l_score = 0
+        self.r_score = 0
+        self.write_score()
+
+    def write_score(self):
         self.clear()
-        self.write(text, font=self.FONT)
+        self.goto(-100, 180)
+        self.write(self.l_score, align="center", font=("Courier", 80, "normal"))
 
-    def increase_level_update_scoreboard(self):
-        self.level += 1
-        self.write_level(f"Level {self.level}")
+        self.goto(100, 180)
+        self.write(self.r_score, align="center", font=("Courier", 80, "normal"))
 
-    def get_level(self) -> int:
-        return self.level
+    def l_point(self):
+        self.l_score += 1
+        self.write_score()
+
+    def r_point(self):
+        self.r_score += 1
+        self.write_score()
