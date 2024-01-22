@@ -16,6 +16,7 @@ def main():
     player = Player()
     scoreboard = Scoreboard()
     car_manager = CarManager()
+
     """
     Came with idea for 2 possible implementations for speed/difficulty increasing.
     First one:
@@ -36,7 +37,9 @@ def main():
             scoreboard.increase_level_update_scoreboard()
             game_speed *= game_speed_multipier
 
-        car_manager.move_cars(speed_multiplier=0)  # for the second option must be the level from `scoreboard.get_level()`
+        car_manager.move_cars(
+            speed_multiplier=0
+        )  # for the second option must be the level from `scoreboard.get_level()`
         if randint(1, 7) == 2:
             car_manager.create_car(randint(-250, 250))
         car_manager.retrieve_cars()
