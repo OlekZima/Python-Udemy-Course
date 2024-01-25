@@ -10,7 +10,7 @@ screen.bgcolor("gray")
 screen.title("Snake game")
 screen.tracer(0)
 
-snake = Snake(init_size=3)
+snake = Snake()
 food = Food()
 scoreboard = Scoreboard()
 
@@ -20,8 +20,8 @@ screen.onkey(key="Down", fun=snake.down)
 screen.onkey(key="Left", fun=snake.left)
 screen.onkey(key="Right", fun=snake.right)
 
-is_stopped: bool = False
-while not is_stopped:
+is_game: bool = True
+while is_game:
     screen.update()
     time.sleep(0.1)
     snake.move()
@@ -34,7 +34,10 @@ while not is_stopped:
         snake.extend()
         # snake.segments.append(snake.init_turtle(len(snake.segments)))
 
-    is_stopped = snake.is_wall_collision() or snake.is_tail_collision()
+    is_stopped: bool = snake.is_wall_collision() or snake.is_tail_collision()
+    if is_stopped:
+        scoreboard.reset()
+        snake.reset()
 
-scoreboard.game_over()
+# scoreboard.game_over()
 screen.exitonclick()

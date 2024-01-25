@@ -1,4 +1,4 @@
-import turtle as t
+from turtle import Turtle, Vec2D
 from typing import List, Dict
 from enum import Enum
 
@@ -11,12 +11,10 @@ class Direction(Enum):
 
 
 class Snake:
-    def __init__(self, init_size: int = 3):
+    def __init__(self):
         self.MOVE_DISTANCE: int = 20
-        self.segments: List[t.Turtle] = [
-            Snake._init_turtle(i) for i in range(init_size)
-        ]
-        self.head: t.Turtle = self.segments[0]
+        self.segments: List[Turtle] = self.create_initial_snake()
+        self.head: Turtle = self.segments[0]
         self.head.color("Black")
         self.direction = self.head.heading()
 
@@ -42,15 +40,15 @@ class Snake:
             return False
 
     def _add_segment(self, position):
-        new_segment = t.Turtle(shape="square")
+        new_segment = Turtle(shape="square")
         new_segment.color("black", "white")
         new_segment.penup()
         new_segment.goto(position)
         self.segments.append(new_segment)
 
     @staticmethod
-    def _init_turtle(offset_from_middle: int) -> t.Turtle:
-        tmp_turtle = t.Turtle(shape="square")
+    def _init_turtle(offset_from_middle: int) -> Turtle:
+        tmp_turtle = Turtle(shape="square")
         tmp_turtle.shapesize(outline=0)
         tmp_turtle.penup()
         tmp_turtle.color("black", "white")
@@ -59,7 +57,7 @@ class Snake:
 
     def move(self):
         for segment_num in range(len(self.segments) - 1, 0, -1):
-            new_pos: t.Vec2D = self.segments[segment_num - 1].position()
+            new_pos: Vec2D = self.segments[segment_num - 1].position()
             self.segments[segment_num].goto(new_pos)
         self.head.forward(distance=self.MOVE_DISTANCE)
 
@@ -90,3 +88,18 @@ class Snake:
 
         self.head.setheading(to_angle=0)
         self.direction = Direction.Right
+
+    def create_initial_snake(self) -> List[Turtle]:
+        self.segments = [Snake._init_turtle(i) for i in range(3)]
+        self.head: Turtle = self.segments[0]
+        self.head.color("Black")
+        self.head.setheading(0)
+        self.direction = self.head.heading()
+        return self.segments
+
+    def reset(self):
+        for segment in self.segments:
+            segment.goto(1000, 1000)
+        self.segments.clear()
+        self.segments = self.create_initial_snake()
+        self.right()
