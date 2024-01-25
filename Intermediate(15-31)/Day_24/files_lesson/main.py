@@ -1,6 +1,3 @@
-file = open("my_file.txt")
-file_data = file.read()
-
-print(file_data)
-
-file.close()
+with open("my_file.txt") as file:
+    file_data: str = file.read()
+    print(file_data)
