@@ -12,7 +12,10 @@ class Scoreboard(Turtle):
         self.goto(x=0, y=250)
         self.score = 0
 
-        self.high_score = 0
+        with open("data.txt", mode="r") as f:
+            high_score = f.read()
+            self.high_score = int(high_score)
+
         self._write_score()
 
     def reset(self):
@@ -41,5 +44,7 @@ class Scoreboard(Turtle):
         self.score += 1
         if self.score > self.high_score:
             self.high_score = self.score
+            with open("data.txt", mode="w") as f:
+                f.write(str(self.high_score))
 
         self._write_prompt(f"Score: {self.score} High Score: {self.high_score}")
