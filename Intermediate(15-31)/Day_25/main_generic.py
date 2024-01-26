@@ -1,5 +1,8 @@
+from typing import List
+
+
 def main():
-    data = []
+    data: List[str] = []
     with open("weather_data.csv", mode="r") as f:
         data = f.readlines()
     print(data)
