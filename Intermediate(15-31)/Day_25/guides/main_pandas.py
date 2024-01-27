@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def main():
-    data = pd.read_csv("../weather_data.csv")
+    data = pd.read_csv("weather_data.csv")
     # print(data)
     # print(type(data))
     # print(type(data["temp"]))
@@ -32,7 +32,7 @@ def main():
 
     new_dataframe = pd.DataFrame(data_dict)
     # print(new_dataframe)
-    new_dataframe.to_csv("../new_data.csv")
+    new_dataframe.to_csv("new_data.csv")
 
 
 if __name__ == "__main__":
