@@ -19,7 +19,7 @@ def main():
     turtle.shape(image)
     state_writer = turtle.Turtle(visible=False)
     state_writer.penup()
-    guessed_states: List[str | None] = []
+    guessed_states: List[str] = []
 
     is_game: bool = True
     while is_game:
@@ -37,9 +37,13 @@ def main():
             continue
         elif states_df["state"].isin([answer_state]).any():
             print(f"Guessed an {answer_state}")
-            guessed_states.append(answer_state)
-            
-            state_writer.goto(get_coords_by_name(states_df, answer_state))
+            try:
+                guessed_states.append(answer_state)
+                state_writer.goto(get_coords_by_name(states_df, answer_state))
+            except TypeError:
+                print("Cannot append `None` value to the `str` list.")
+            except:
+                print("Something is broken")
             state_writer.write(answer_state)
             if len(guessed_states) == len(states_df):
                 is_game = False
