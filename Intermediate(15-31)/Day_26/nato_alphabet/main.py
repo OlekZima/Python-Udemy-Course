@@ -3,13 +3,7 @@ import pandas as pd
 
 
 def main():
-    alphabet_df: pd.DataFrame = pd.DataFrame()
-    try:
-        alphabet_df: pd.DataFrame = pd.read_csv("./nato_phonetic_alphabet.csv")
-    except FileExistsError:
-        print("File doesn't exist.")
-    except:
-        print("Smth is broken.")
+    alphabet_df: pd.DataFrame = pd.read_csv("./nato_phonetic_alphabet.csv")
 
     alphabet_dict: Dict[str, str] = {
         row["letter"]: row["code"] for (_, row) in alphabet_df.iterrows()
