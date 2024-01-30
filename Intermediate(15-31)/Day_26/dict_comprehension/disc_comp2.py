@@ -6,7 +6,7 @@ def convert_c_to_f(temp_c: float) -> float:
 
 
 def main():
-    weather_c = eval(
+    weather_c: Dict[str, int] = eval(
         input()
     )  # {"Monday": 12, "Tuesday": 14, "Wednesday": 15, "Thursday": 14, "Friday": 21, "Saturday": 22, "Sunday": 24}
 
