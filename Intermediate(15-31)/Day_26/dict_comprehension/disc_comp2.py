@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 
 
 def convert_c_to_f(temp_c: float) -> float:
