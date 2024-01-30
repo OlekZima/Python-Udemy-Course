@@ -38,8 +38,8 @@ def main():
         elif states_df["state"].isin([answer_state]).any():
             print(f"Guessed an {answer_state}")
             try:
-                guessed_states.append(answer_state)
-                state_writer.goto(get_coords_by_name(states_df, answer_state))
+                guessed_states.append(answer_state)  # type: ignore
+                state_writer.goto(get_coords_by_name(states_df, answer_state))  # type: ignore
             except TypeError:
                 print("Cannot append `None` value to the `str` list.")
             except:
