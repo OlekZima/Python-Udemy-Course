@@ -8,10 +8,5 @@ my_label = tk.Label(text="Hi I'm a label!", font=("Arial", 24, "italic"))
 my_label.pack(side="right", expand=False)
 
 
-import turtle as t
-
-tim = t.Turtle()
-tim.write("text")
-
 
 tk.mainloop()
