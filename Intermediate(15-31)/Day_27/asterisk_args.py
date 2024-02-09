@@ -1,4 +1,4 @@
-def add(*nums: int):
+def add(*nums: int) -> int:
     overall_sum = 0
     for n in nums:
         overall_sum += n
