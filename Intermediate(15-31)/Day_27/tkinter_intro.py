@@ -13,6 +13,7 @@ my_label["text"] = "New text"
 my_label.config(text="Newer text")
 
 # Button
+
 counter = 0
 
 
@@ -27,8 +28,13 @@ button.pack()
 
 # Entry
 
-input = tk.Entry()
+input = tk.Entry(width=10)
 input.pack()
+
+button_entry = tk.Button(
+    text="Click me too!", command=lambda: my_label.config(text=input.get())
+)
+button_entry.pack()
 
 
 tk.mainloop()
