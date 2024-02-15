@@ -10,7 +10,7 @@ WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 1
-
+check_mark = "✓"
 # ---------------------------- TIMER RESET ------------------------------- #
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
@@ -29,7 +29,7 @@ def start_timer():
         # window.after(SHORT_BREAK_MIN * 60 * 1000, start_timer)
     else:
         countdown(WORK_MIN * 60)
-        text_label.config(text="Work")
+        text_label.config(text="Work", fg=GREEN)
         # window.after(WORK_MIN * 60 * 1000, start_timer)
 
     reps += 1
@@ -45,6 +45,10 @@ def countdown(count: int):
     canvas.itemconfig(timer_text, text=f"{minutes}:{seconds}")
     if count <= 0:
         start_timer()
+        global reps
+        if reps % 2 == 0:
+            old_text = check_mark_label["text"]
+            check_mark_label.config(text=old_text + check_mark)
     else:
         window.after(1000, countdown, count - 1)
 
@@ -79,8 +83,7 @@ reset_button = tk.Button(text="Reset")
 reset_button.grid(column=2, row=2)
 
 # Check mark label
-check_mark_label = tk.Label(
-    text="✓", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 28, "bold"))
+check_mark_label = tk.Label(fg=GREEN, bg=YELLOW, font=(FONT_NAME, 28, "bold"))
 
 check_mark_label.grid(column=1, row=3)
 
