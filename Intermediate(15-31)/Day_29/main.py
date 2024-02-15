@@ -7,7 +7,7 @@ import tkinter as tk
 
 window = tk.Tk()
 window.title("Password Manager")
-window.config(padx=20, pady=20, bg="white")
+window.config(padx=50, pady=50, bg="white")
 # window.minsize(240, 240)
 
 # Canvas
