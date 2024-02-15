@@ -13,8 +13,12 @@ reps = 0
 timer: str = ""
 # ---------------------------- TIMER RESET ------------------------------- #
 
+
 def reset_timer():
+    global reps
+    reps = 0
     window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text="00:00")
     text_label.config(text="Timer")
     check_mark_label.config(text="")
 # ---------------------------- TIMER MECHANISM ------------------------------- #
@@ -83,7 +87,7 @@ start_button = tk.Button(text="Start", command=start_timer)
 start_button.grid(column=0, row=2)
 
 # Reset button
-reset_button = tk.Button(text="Reset")
+reset_button = tk.Button(text="Reset", command=reset_timer)
 reset_button.grid(column=2, row=2)
 
 # Check mark label
