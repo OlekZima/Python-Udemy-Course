@@ -9,7 +9,7 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
-reps = 1
+reps = 0
 check_mark = "✓"
 # ---------------------------- TIMER RESET ------------------------------- #
 
@@ -18,6 +18,7 @@ check_mark = "✓"
 
 def start_timer():
     global reps
+    reps += 1
 
     if reps % 8 == 0:
         countdown(LONG_BREAK_MIN * 60)
@@ -31,8 +32,6 @@ def start_timer():
         countdown(WORK_MIN * 60)
         text_label.config(text="Work", fg=GREEN)
         # window.after(WORK_MIN * 60 * 1000, start_timer)
-
-    reps += 1
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
