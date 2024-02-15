@@ -10,9 +10,13 @@ WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
-check_mark = "✓"
+timer: str = ""
 # ---------------------------- TIMER RESET ------------------------------- #
 
+def reset_timer():
+    window.after_cancel(timer)
+    text_label.config(text="Timer")
+    check_mark_label.config(text="")
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
 
@@ -47,9 +51,10 @@ def countdown(count: int):
         global reps
         if reps % 2 == 0:
             old_text = check_mark_label["text"]
-            check_mark_label.config(text=old_text + check_mark)
+            check_mark_label.config(text=old_text + "✓")
     else:
-        window.after(1000, countdown, count - 1)
+        global timer
+        timer = window.after(1000, countdown, count - 1)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
