@@ -3,6 +3,7 @@ import tkinter as tk
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+
 def save_data():
     website = website_entry.get()
     email = email_entry.get()
