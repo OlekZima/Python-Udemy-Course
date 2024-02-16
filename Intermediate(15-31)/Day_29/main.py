@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -7,14 +8,28 @@ import tkinter as tk
 
 def save_data():
     website = website_entry.get()
+    website_entry.delete(0, tk.END)
+
     email = email_entry.get()
+    # email_entry.delete(0, tk.END)
+
     password = password_entry.get()
+    password_entry.delete(0, tk.END)
 
     if not (website and email and password):
-        print("A,a,a,a smth is empty!")
-    else:
+        messagebox.showerror(
+            title="Error", message="You must fill all the field before adding data."
+        )
+        return
+    
+    is_user_ok = messagebox.askokcancel(
+        title=website,
+        message=f"There are the details entered: \nEmail: {email}\nPassword: {password}\nIs ot ok to save?",
+    )
+    if is_user_ok:
         with open("./data.txt", "a") as f:
             f.write(f"{website} | {email} | {password}\n")
+    
 
 
 # ---------------------------- UI SETUP ------------------------------- #
