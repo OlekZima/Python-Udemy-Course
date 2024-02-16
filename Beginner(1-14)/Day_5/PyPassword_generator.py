@@ -1,4 +1,4 @@
-from random import randint, choice, sample
+from random import randint, choice
 from string import ascii_letters
 
 print("Welcome to the PyPassword Generator!")
