@@ -1,33 +1,28 @@
 import tkinter as tk
 from tkinter import messagebox
-from random import randint, choice
+from random import randint, choice, shuffle
 from string import ascii_letters
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_password():
+    password_entry.delete(0, tk.END)
+
+    letters_len = randint(12, 14)
+    symbols_num = randint(4, 5)
+    numbers_num = randint(4, 5)
+
+    symbols = ["!", "#", "$", "%", "&", "()", ")", "*", "+"]
+
+    password = [choice(ascii_letters) for _ in range(letters_len)]
+    password.extend([choice(symbols) for _ in range(symbols_num)])
+    password.extend([str(randint(0, 9)) for _ in range(numbers_num)])
+
+    shuffle(password)
+    password = "".join(list(password))
+    password_entry.insert(0, password)
 
 
-print("Welcome to the PyPassword Generator!")
-
-pass_len = int(input("How many letters would you like in your password?\n"))
-symbols_num = int(input("How many symbols would you like?\n"))
-numbers_num = int(input("How many numbers would you like?\n"))
-
-password = ""
-
-for i in range(pass_len):
-    password += choice(ascii_letters)
-
-symbols = ['!', '#', '$', '%', '&', '()', ')', '*', '+']
-
-for i in range(symbols_num):
-    password += choice(symbols)
-
-for i in range(numbers_num):
-    password += str(randint(0, 9))
-
-# password = "".join(sample(password, len(password)))
-password = "".join(list(password))
-
-print(f"Your password is {password}")
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
@@ -46,7 +41,7 @@ def save_data():
             title="Error", message="You must fill all the field before adding data."
         )
         return
-    
+
     is_user_ok = messagebox.askokcancel(
         title=website,
         message=f"There are the details entered: \nEmail: {email}\nPassword: {password}\nIs ot ok to save?",
@@ -54,7 +49,6 @@ def save_data():
     if is_user_ok:
         with open("./data.txt", "a") as f:
             f.write(f"{website} | {email} | {password}\n")
-    
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -90,10 +84,12 @@ email_entry.grid(row=2, column=1, columnspan=2)
 password_label = tk.Label(text="Password:", bg="white")
 password_label.grid(row=3, column=0)
 
-password_entry = tk.Entry(width=21)
+password_entry = tk.Entry(width=25)
 password_entry.grid(row=3, column=1, sticky="E")
 
-generate_pass_btn = tk.Button(text="Generate Password", width=15)
+generate_pass_btn = tk.Button(
+    text="Generate Password", width=15, command=generate_password
+)
 generate_pass_btn.grid(row=3, column=2, sticky="EW")
 
 add_btn = tk.Button(text="Add", width=36, command=save_data)
