@@ -1,4 +1,5 @@
 import tkinter as tk
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -9,10 +10,11 @@ def save_data():
     email = email_entry.get()
     password = password_entry.get()
 
-    data = f"{website} | {email} | {password}"
-
-    with open("./data.txt", "a") as f:
-        f.write(data)
+    if not (website and email and password):
+        print("A,a,a,a smth is empty!")
+    else:
+        with open("./data.txt", "a") as f:
+            f.write(f"{website} | {email} | {password}\n")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -51,8 +53,8 @@ password_label.grid(row=3, column=0)
 password_entry = tk.Entry(width=21)
 password_entry.grid(row=3, column=1, sticky="E")
 
-generate_pass_btn = tk.Button(text="Generate Password")
-generate_pass_btn.grid(row=3, column=2)
+generate_pass_btn = tk.Button(text="Generate Password", width=15)
+generate_pass_btn.grid(row=3, column=2, sticky="EW")
 
 add_btn = tk.Button(text="Add", width=36, command=save_data)
 add_btn.grid(row=4, column=1, columnspan=2)
