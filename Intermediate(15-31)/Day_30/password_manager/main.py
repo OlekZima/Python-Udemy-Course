@@ -7,6 +7,22 @@ from random import randint, choice, shuffle
 from string import ascii_letters
 
 
+# ----------------------------- PASSWORD SEARCH --------------------------------- #
+def find_password():
+    website_name = website_entry.get()
+    data = read_json_data("./data.json")
+    try:
+        password = data[website_name]["password"]
+    except KeyError:
+        messagebox.showerror("Error", "No details for the website exists.")
+        return
+    else:
+        messagebox.showinfo(
+            "Password", f"Website: {website_name}\nPassword: {password}"
+        )
+        pyperclip.copy(password)
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
     password_entry.delete(0, tk.END)
@@ -92,7 +108,7 @@ website_entry = tk.Entry(width=25)
 website_entry.focus()
 website_entry.grid(row=1, column=1)
 
-search_btn = tk.Button(text="Search", width=15)
+search_btn = tk.Button(text="Search", width=15, command=find_password)
 search_btn.grid(row=1, column=2)
 
 # Email/Username section
