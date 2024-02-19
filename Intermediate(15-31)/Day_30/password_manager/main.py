@@ -28,8 +28,6 @@ def generate_password():
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-
-
 def read_json_data(file_path: str) -> Dict:
     try:
         with open(file_path, "r") as f:
@@ -90,9 +88,12 @@ canvas.grid(row=0, column=1)
 website_label = tk.Label(text="Website:", bg="white")
 website_label.grid(row=1, column=0)
 
-website_entry = tk.Entry(width=35)
+website_entry = tk.Entry(width=25)
 website_entry.focus()
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry.grid(row=1, column=1)
+
+search_btn = tk.Button(text="Search", width=15)
+search_btn.grid(row=1, column=2)
 
 # Email/Username section
 email_label = tk.Label(text="Email/Username:", bg="white")
