@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 from tkinter import messagebox
 import pyperclip
@@ -34,8 +35,15 @@ def save_data():
 
     email = email_entry.get()
     # email_entry.delete(0, tk.END)
-
     password = password_entry.get()
+
+    data_to_write = {
+        website: {
+            "email": email,
+            "password": password,
+        }
+    }
+
     password_entry.delete(0, tk.END)
 
     if not (website and email and password):
@@ -49,8 +57,14 @@ def save_data():
         message=f"There are the details entered: \nEmail: {email}\nPassword: {password}\nIs ot ok to save?",
     )
     if is_user_ok:
-        with open("./data.txt", "a") as f:
-            f.write(f"{website} | {email} | {password}\n")
+        with open("./data.json", "r") as f:
+            data = json.load(f)
+            data.update(data_to_write)
+
+        with open("./data.json", "w") as f:
+            json.dump(data, f, indent=4)
+
+            # f.write(f"{website} | {email} | {password}\n")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
