@@ -1,10 +1,13 @@
 import json
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import font
 from typing import Dict
 import pyperclip
 from random import randint, choice, shuffle
 from string import ascii_letters
+from tkinter import ttk
+from ttkthemes import ThemedTk
 
 
 # ----------------------------- PASSWORD SEARCH --------------------------------- #
@@ -89,11 +92,12 @@ def save_data():
 
 # ---------------------------- UI SETUP ------------------------------- #
 
-window = tk.Tk()
+window = ThemedTk(theme="arc")
 window.title("Password Manager")
 window.config(padx=50, pady=50, bg="white")
 # window.minsize(240, 240)
 
+# ('winnative', 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative')
 # Canvas
 lock_image = tk.PhotoImage(file="logo.png")
 canvas = tk.Canvas(width=200, height=200, bg="white", highlightthickness=0)
@@ -104,34 +108,34 @@ canvas.grid(row=0, column=1)
 website_label = tk.Label(text="Website:", bg="white")
 website_label.grid(row=1, column=0)
 
-website_entry = tk.Entry(width=25)
+website_entry = ttk.Entry(width=25)
 website_entry.focus()
-website_entry.grid(row=1, column=1)
+website_entry.grid(row=1, column=1, sticky="EW")
 
-search_btn = tk.Button(text="Search", width=15, command=find_password)
+search_btn = ttk.Button(text="Search", width=18, command=find_password)
 search_btn.grid(row=1, column=2)
 
 # Email/Username section
 email_label = tk.Label(text="Email/Username:", bg="white")
 email_label.grid(row=2, column=0)
 
-email_entry = tk.Entry(width=35)
+email_entry = ttk.Entry(width=35)
 email_entry.insert(tk.END, "name@email.com")
-email_entry.grid(row=2, column=1, columnspan=2)
+email_entry.grid(row=2, column=1, columnspan=2, sticky="EW")
 
 # Password section
 password_label = tk.Label(text="Password:", bg="white")
 password_label.grid(row=3, column=0)
 
-password_entry = tk.Entry(width=25)
-password_entry.grid(row=3, column=1, sticky="E")
+password_entry = ttk.Entry(width=25)
+password_entry.grid(row=3, column=1, sticky="EW")
 
-generate_pass_btn = tk.Button(
-    text="Generate Password", width=15, command=generate_password
+generate_pass_btn = ttk.Button(
+    text="Generate Password", width=18, command=generate_password,
 )
 generate_pass_btn.grid(row=3, column=2, sticky="EW")
 
-add_btn = tk.Button(text="Add", width=36, command=save_data)
-add_btn.grid(row=4, column=1, columnspan=2)
+add_btn = ttk.Button(text="Add", width=36, command=save_data)
+add_btn.grid(row=4, column=1, columnspan=2, sticky="EW")
 
 window.mainloop()
