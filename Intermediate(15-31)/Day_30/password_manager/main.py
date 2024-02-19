@@ -1,6 +1,7 @@
 import json
 import tkinter as tk
 from tkinter import messagebox
+from typing import Dict
 import pyperclip
 from random import randint, choice, shuffle
 from string import ascii_letters
@@ -29,12 +30,21 @@ def generate_password():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
+def read_json_data(file_path: str) -> Dict:
+    try:
+        with open(file_path, "r") as f:
+            data = json.load(f)
+            return data
+    except FileNotFoundError:
+        with open(file_path, "w") as f:
+            return {}
+
+
 def save_data():
     website = website_entry.get()
     website_entry.delete(0, tk.END)
 
     email = email_entry.get()
-    # email_entry.delete(0, tk.END)
     password = password_entry.get()
 
     data_to_write = {
@@ -57,14 +67,10 @@ def save_data():
         message=f"There are the details entered: \nEmail: {email}\nPassword: {password}\nIs ot ok to save?",
     )
     if is_user_ok:
-        with open("./data.json", "r") as f:
-            data = json.load(f)
-            data.update(data_to_write)
-
+        data = read_json_data("./data.json")
+        data.update(data_to_write)
         with open("./data.json", "w") as f:
             json.dump(data, f, indent=4)
-
-            # f.write(f"{website} | {email} | {password}\n")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
