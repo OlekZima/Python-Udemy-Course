@@ -6,7 +6,7 @@ class Window(tk.Tk):
     def __init__(self):
         super().__init__()
         self.init_ui()
-        self.timer = ""
+        self.timer: str = ""
 
         self.to_learn_df = pd.DataFrame(
             {
