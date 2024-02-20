@@ -1,14 +1,23 @@
-from random import choice
 import tkinter as tk
 import pandas as pd
-from typing import Dict
 
 
 class Window(tk.Tk):
     def __init__(self):
         super().__init__()
+        self.init_ui()
         self.timer = None
 
+        self.to_learn_df = pd.DataFrame(
+            {
+                "French": [],
+                "English": [],
+            }
+        )
+
+        self.flip_card_front()
+
+    def init_ui(self):
         self.BACKGROUND_COLOR = "#B1DDC6"
         self.title("Flashy")
         self.config(padx=50, pady=50, bg=self.BACKGROUND_COLOR)
@@ -37,7 +46,6 @@ class Window(tk.Tk):
             400, 263, text=self.canvas_word_french, font=("Ariel", 60, "bold")
         )
         self.canvas.grid(column=0, row=0, columnspan=2)
-        self.flip_card_front()
 
         # Buttons
         self.checkmark_img = tk.PhotoImage(file="./images/right.png")
@@ -54,11 +62,25 @@ class Window(tk.Tk):
             image=self.wrong_img,
             highlightthickness=0,
             border=0,
-            command=self.flip_card_back,
+            command=self.wrong,
         )
         self.wrong_btn.grid(column=0, row=1)
 
-        # self.timer = self.after(3000, self.flip_card_back)
+    def wrong(self):
+        if not self.is_to_learn:
+            to_append_df = pd.DataFrame(
+                {
+                    "French": [self.current_french_word],
+                    "English": [
+                        self.get_translation(self.current_french_word, self.data)
+                    ],
+                }
+            )
+            self.to_learn_df: pd.DataFrame = pd.concat(
+                [self.to_learn_df, to_append_df], ignore_index=True
+            )
+            self.to_learn_df.to_csv("./data/words_to_learn.csv", index=False)
+            self.flip_card_front()
 
     def checkmark(self):
         self.delete_word_from_learning()
@@ -74,7 +96,6 @@ class Window(tk.Tk):
             return
 
     def change_word(self) -> str:
-        # new_word = choice(list(self.data_dict.keys()))
         try:
             new_word: str = self.data.sample().get("French").to_string(index=False)  # type: ignore
         except ValueError:
@@ -85,6 +106,8 @@ class Window(tk.Tk):
         try:
             with open(words_to_learn_path, "r"):
                 data = pd.read_csv(words_to_learn_path)
+                if data.size == 0:
+                    raise FileNotFoundError
                 self.is_to_learn = True
                 return data
         except FileNotFoundError:
