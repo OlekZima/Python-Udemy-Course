@@ -7,13 +7,17 @@ from typing import Dict
 class Window(tk.Tk):
     def __init__(self):
         super().__init__()
+        self.timer = None
+
         self.BACKGROUND_COLOR = "#B1DDC6"
         self.title("Flashy")
         self.config(padx=50, pady=50, bg=self.BACKGROUND_COLOR)
         self.flash_card_front = tk.PhotoImage(file="./images/card_front.png")
         self.flash_card_back = tk.PhotoImage(file="./images/card_back.png")
 
-        self.data_dict: Dict[str, str] = self.get_data("./data/french_words.csv")
+        self.data: pd.DataFrame = self.get_data(
+            "./data/french_words.csv", "./data/words_to_learn.csv"
+        )
 
         self.canvas = tk.Canvas(
             width=800, height=526, bg=self.BACKGROUND_COLOR, highlightthickness=0
@@ -23,10 +27,9 @@ class Window(tk.Tk):
         )
 
         self.canvas_lang = "French"
-        self.canvas_word_french = choice(list(self.data_dict.keys()))
-        self.canvas_word_eng = self.get_translation(
-            self.canvas_word_french, self.data_dict
-        )
+        self.canvas_word_french: str = self.data.sample().get("French").to_string(index=False)  # type: ignore
+
+        self.canvas_word_eng = self.get_translation(self.canvas_word_french, self.data)
         self.language_text = self.canvas.create_text(
             400, 150, text=self.canvas_lang, font=("Ariel", 40, "italic")
         )
@@ -34,6 +37,7 @@ class Window(tk.Tk):
             400, 263, text=self.canvas_word_french, font=("Ariel", 60, "bold")
         )
         self.canvas.grid(column=0, row=0, columnspan=2)
+        self.flip_card_front()
 
         # Buttons
         self.checkmark_img = tk.PhotoImage(file="./images/right.png")
@@ -41,9 +45,9 @@ class Window(tk.Tk):
             image=self.checkmark_img,
             highlightthickness=0,
             border=0,
-            command=self.flip_card_front,
+            command=self.delete_word_from_learning,
         )
-        self.checkmark_btn.grid(column=0, row=1)
+        self.checkmark_btn.grid(column=1, row=1)
 
         self.wrong_img = tk.PhotoImage(file="./images/wrong.png")
         self.wrong_btn = tk.Button(
@@ -52,49 +56,70 @@ class Window(tk.Tk):
             border=0,
             command=self.flip_card_back,
         )
-        self.wrong_btn.grid(column=1, row=1)
+        self.wrong_btn.grid(column=0, row=1)
 
-        self.timer = self.after(3000, self.flip_card_back)
+        # self.timer = self.after(3000, self.flip_card_back)
 
-    def change_word(self):
-        new_word = choice(list(self.data_dict.keys()))
+    def delete_word_from_learning(self):
+        if self.is_to_learn:
+            data_df = pd.DataFrame(self.data)
+            data_df = data_df[data_df["French"] != self.current_french_word]
+            data_df.to_csv("./data/words_to_learn.csv", index=False)
+            self.data = data_df
+        else:
+            return
+
+        self.flip_card_front()
+
+    def change_word(self) -> str:
+        # new_word = choice(list(self.data_dict.keys()))
+        new_word: str = self.data.sample().get("French").to_string(index=False)  # type: ignore
         return new_word
 
-    def get_data(self, path: str) -> Dict[str, str]:
+    def get_data(self, overall_data: str, words_to_learn_path: str):
         try:
-            with open(path, "r"):
-                data = pd.read_csv(path)
-                data_dict = {
-                    row["French"]: row["English"] for (_, row) in data.iterrows()
-                }
-                return data_dict
+            with open(words_to_learn_path, "r"):
+                data = pd.read_csv(words_to_learn_path)
+                self.is_to_learn = True
+                return data
         except FileNotFoundError:
-            return {}
+            with open(words_to_learn_path, mode="w"):
+                pass
+            with open(overall_data, "r"):
+                data = pd.read_csv(overall_data)
+                self.is_to_learn = False
+                return data
 
-    def get_translation(self, word_to_translate: str, data: Dict[str, str]):
-        translated_word = data.get(word_to_translate, "None")
+    def get_translation(self, word_to_translate: str, data: pd.DataFrame):
+        translated_word = data.loc[data["French"] == word_to_translate].get("English").to_string(index=False)  # type: ignore
         return translated_word
+
+    def flip_card_front(self):
+        self.canvas.itemconfig(self.language_text, text="French", fill="black")
+        self.canvas.itemconfig(self.canvas_img, image=self.flash_card_front)
+
+        self.current_french_word = self.change_word()
+        self.canvas.itemconfig(
+            self.word_text, text=self.current_french_word, fill="black"
+        )
+
+        if self.timer:
+            self.after_cancel(self.timer)
+
+        self.timer = self.after(3000, self.flip_card_back)
 
     def flip_card_back(self):
         self.canvas.itemconfig(self.language_text, text="English", fill="white")
         self.canvas.itemconfig(
             self.word_text,
             text=self.get_translation(
-                self.canvas.itemcget(self.word_text, "text"), self.data_dict
+                self.canvas.itemcget(self.word_text, "text"), self.data
             ),
             fill="white",
         )
-
         self.canvas.itemconfig(self.canvas_img, image=self.flash_card_back)
-        self.after_cancel(self.timer)
 
-        # self.canvas.itemconfig(self.word_text, text=self.get_translation())
-
-    def flip_card_front(self):
-        self.canvas.itemconfig(self.language_text, text="French", fill="black")
-        self.canvas.itemconfig(self.word_text, text=self.change_word(), fill="black")
-
-        self.canvas.itemconfig(self.canvas_img, image=self.flash_card_front)
+        self.after_cancel(self.timer)  # type: ignore
 
 
 if __name__ == "__main__":
