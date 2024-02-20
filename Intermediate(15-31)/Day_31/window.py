@@ -148,8 +148,3 @@ class Window(tk.Tk):
         self.canvas.itemconfig(self.canvas_img, image=self.flash_card_back)
 
         self.after_cancel(self.timer)
-
-
-if __name__ == "__main__":
-    window = Window()
-    window.mainloop()
