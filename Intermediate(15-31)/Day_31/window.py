@@ -6,7 +6,7 @@ class Window(tk.Tk):
     def __init__(self):
         super().__init__()
         self.init_ui()
-        self.timer = None
+        self.timer = ""
 
         self.to_learn_df = pd.DataFrame(
             {
@@ -147,7 +147,7 @@ class Window(tk.Tk):
         )
         self.canvas.itemconfig(self.canvas_img, image=self.flash_card_back)
 
-        self.after_cancel(self.timer)  # type: ignore
+        self.after_cancel(self.timer)
 
 
 if __name__ == "__main__":
