@@ -80,7 +80,7 @@ class Window(tk.Tk):
                 [self.to_learn_df, to_append_df], ignore_index=True
             )
             self.to_learn_df.to_csv("./data/words_to_learn.csv", index=False)
-            self.flip_card_front()
+        self.flip_card_front()
 
     def checkmark(self):
         self.delete_word_from_learning()
