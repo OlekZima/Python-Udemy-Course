@@ -45,7 +45,7 @@ class Window(tk.Tk):
             image=self.checkmark_img,
             highlightthickness=0,
             border=0,
-            command=self.delete_word_from_learning,
+            command=self.checkmark,
         )
         self.checkmark_btn.grid(column=1, row=1)
 
@@ -60,6 +60,10 @@ class Window(tk.Tk):
 
         # self.timer = self.after(3000, self.flip_card_back)
 
+    def checkmark(self):
+        self.delete_word_from_learning()
+        self.flip_card_front()
+
     def delete_word_from_learning(self):
         if self.is_to_learn:
             data_df = pd.DataFrame(self.data)
@@ -69,11 +73,12 @@ class Window(tk.Tk):
         else:
             return
 
-        self.flip_card_front()
-
     def change_word(self) -> str:
         # new_word = choice(list(self.data_dict.keys()))
-        new_word: str = self.data.sample().get("French").to_string(index=False)  # type: ignore
+        try:
+            new_word: str = self.data.sample().get("French").to_string(index=False)  # type: ignore
+        except ValueError:
+            new_word: str = "List is empty!"
         return new_word
 
     def get_data(self, overall_data: str, words_to_learn_path: str):
