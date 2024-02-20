@@ -55,6 +55,8 @@ class Window(tk.Tk):
         )
         self.wrong_btn.grid(column=1, row=1)
 
+        self.timer = self.after(3000, self.flip_card_back)
+
     def change_word(self):
         new_word = choice(list(self.data_dict.keys()))
         return new_word
@@ -85,6 +87,7 @@ class Window(tk.Tk):
         )
 
         self.canvas.itemconfig(self.canvas_img, image=self.flash_card_back)
+        self.after_cancel(self.timer)
 
         # self.canvas.itemconfig(self.word_text, text=self.get_translation())
 
