@@ -3,4 +3,4 @@
 .venv
 Intermediate(15-31)/Day_29/data.txt
 Intermediate(15-31)/Day_30/password_manager/data.*
-IntermediatePlus(32-40)/Day_32/credentials.py
+**/credentials.py
