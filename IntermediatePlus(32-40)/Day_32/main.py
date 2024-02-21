@@ -1,5 +1,5 @@
 import smtplib as smtp
-from credentials import my_email, app_password, mail_send
+from quote_sender.credentials import my_email, app_password, mail_send
 
 with smtp.SMTP("smtp.gmail.com") as connection:
     connection.starttls()
