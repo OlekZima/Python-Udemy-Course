@@ -60,6 +60,9 @@ def main():
         mail = data[1]
         filled_letter = get_random_letter(
             "./letter_templates/").replace("[NAME]", name)
+        
+        # TODO: place send_letter() fun with filled data. 
+        # Create dotenv and figure out how to work with it
         print(filled_letter)
         print("=" * 80)
 
