@@ -1,14 +1,9 @@
-from typing import Dict, List
+from typing import Dict
 import pandas as pd
 from random import choice
 import datetime
 import smtplib
 import os
-##################### Extra Hard Starting Project ######################
-
-# 1. Update the birthdays.csv
-
-# 2. Check if today matches a birthday in the birthdays.csv
 
 
 def get_data(path: str) -> pd.DataFrame:
@@ -40,13 +35,18 @@ def get_random_letter(path_to_letters: str) -> str:
     return file_data
 
 
-def send_letter(smtp_host: str, user_mail: str, app_password: str,
-                from_mail: str, to_mail: str, letter: str):
+def send_letter(
+    smtp_host: str,
+    user_mail: str,
+    app_password: str,
+    from_mail: str,
+    to_mail: str,
+    letter: str,
+):
     with smtplib.SMTP(smtp_host) as connection:
         connection.starttls()
         connection.login(user_mail, app_password)
-        connection.sendmail(from_mail, to_mail,
-                            f"Subject:Happy Birthday!\n\n{letter}")
+        connection.sendmail(from_mail, to_mail, f"Subject:Happy Birthday!\n\n{letter}")
 
 
 def main():
@@ -58,10 +58,9 @@ def main():
     for data in people_dict["data"]:
         name = data[0]
         mail = data[1]
-        filled_letter = get_random_letter(
-            "./letter_templates/").replace("[NAME]", name)
-        
-        # TODO: place send_letter() fun with filled data. 
+        filled_letter = get_random_letter("./letter_templates/").replace("[NAME]", name)
+
+        # TODO: place send_letter() fun with filled data.
         # Create dotenv and figure out how to work with it
         print(filled_letter)
         print("=" * 80)
@@ -69,8 +68,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# 3. If step 2 is true, pick a random letter from letter templates and replace the [NAME] with the person's actual name from birthdays.csv
-
-# 4. Send the letter generated in step 3 to that person's email address.
